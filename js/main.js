@@ -1,15 +1,3 @@
-/*
-id
-url
-description
-likes
-comments
-    id
-    avatar
-    message
-    name
-*/
-
 const URL = [
   '1','2','3','4','5','6','7','8','9','10',
   '11','12','13','14','15','16','17','18','19','20',
@@ -33,20 +21,38 @@ const getRandomInteger = (a, b) => {
   return Math.floor(result);
 };
 
-const createFotoDescription = () => {
+function createRandomIdFromRangeGenerator (min, max) {
+  const previousValues = [];
 
-  return {
-     ID: getRandomInteger(1, 25),
-     URL: `photos/${ URL[getRandomInteger(0, URL.length - 1)]}.jpg`,
-     DESCRIPTION: DESCRIPTION[getRandomInteger(0, DESCRIPTION.length - 1)],
-     LIKES: getRandomInteger(15, 200),
-     COMMENTS: [{id: getRandomInteger(1, 400),
-      avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
-      message: MESSAGE[getRandomInteger(0, MESSAGE.length - 1)],
-      name: NAME[getRandomInteger(0, NAME.length - 1)], }],
+  return function () {
+    let currentValue = getRandomInteger(min, max);
+    if (previousValues.length >= (max - min + 1)) {
+      console.error(`Перебраны все числа из диапазона от ${ min } до ${ max}`);
+      return null;
+    }
+    while (previousValues.includes(currentValue)) {
+      currentValue = getRandomInteger(min, max);
+    }
+    previousValues.push(currentValue);
+    return currentValue;
   };
-};
+}
 
-console.log(
-    createFotoDescription()
-  );
+
+const generatePhotoId = createRandomIdFromRangeGenerator(1, 25);
+const generatePhotoUrl = createRandomIdFromRangeGenerator(0, URL.length - 1);
+const generateAvatarId = createRandomIdFromRangeGenerator(1, 300);
+
+const createFotoDescription = () => ({
+  ID: generatePhotoId(),
+  URL: `photos/${ URL[generatePhotoUrl()]}.jpg`,
+  DESCRIPTION: DESCRIPTION[getRandomInteger(0, DESCRIPTION.length - 1)],
+  LIKES: getRandomInteger(15, 200),
+  COMMENTS: [{id: generateAvatarId(),
+    avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
+    message: MESSAGE[getRandomInteger(0, MESSAGE.length - 1)],
+    name: NAME[getRandomInteger(0, NAME.length - 1)], }],
+});
+
+const similarFotoDescription = Array.from({length: 25}, createFotoDescription);
+console.log(similarFotoDescription);
