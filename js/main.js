@@ -44,11 +44,11 @@ const generatePhotoUrl = createRandomIdFromRangeGenerator(0, URL.length - 1);
 const generateAvatarId = createRandomIdFromRangeGenerator(1, 300);
 
 const createFotoDescription = () => ({
-  ID: generatePhotoId(),
-  URL: `photos/${ URL[generatePhotoUrl()]}.jpg`,
-  DESCRIPTION: DESCRIPTION[getRandomInteger(0, DESCRIPTION.length - 1)],
-  LIKES: getRandomInteger(15, 200),
-  COMMENTS: [{id: generateAvatarId(),
+  id: generatePhotoId(),
+  url: `photos/${ URL[generatePhotoUrl()]}.jpg`,
+  description: DESCRIPTION[getRandomInteger(0, DESCRIPTION.length - 1)],
+  likes: getRandomInteger(15, 200),
+  comments: [{id: generateAvatarId(),
     avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
     message: MESSAGE[getRandomInteger(0, MESSAGE.length - 1)],
     name: NAME[getRandomInteger(0, NAME.length - 1)], }],
