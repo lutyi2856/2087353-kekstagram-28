@@ -1,5 +1,4 @@
-import {createRandomIdFromRangeGenerator} from './util.js';
-import {getRandomInteger} from './util.js';
+import {createRandomIdFromRangeGenerator, getRandomInteger} from './util.js';
 
 const MIN_ID_AMOUNT = 1;
 const MAX_ID_AMOUNT = 25;
