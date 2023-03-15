@@ -53,7 +53,7 @@ const generatePhotoId = createRandomIdFromRangeGenerator(MIN_ID_AMOUNT, MAX_ID_A
 const generatePhotoUrl = createRandomIdFromRangeGenerator(MIN_URL_AMOUNT, MAX_URL_AMOUNT);
 const generateAvatarId = createRandomIdFromRangeGenerator(MIN_AVATAR_ID_AMOUNT, MAX_AVATAR_ID_AMOUNT);
 
-const createComment = () => ({
+const createComments = () => ({
   id: generateAvatarId(),
   avatar: `img/avatar-${getRandomInteger(MIN_AVATAR_IMG_AMOUNT, MAX_AVATAR_IMG_AMOUNT)}.svg`,
   message: MESSAGES[getRandomInteger(MIN_MESSAGES_AMOUNT, MAX_MESSAGES_AMOUNT)],
@@ -65,7 +65,7 @@ const createFotoDescription = () => ({
   url: `photos/${ URLS[generatePhotoUrl()]}.jpg`,
   description: DESCRIPTIONS[getRandomInteger(MIN_DESCRIPTIONS_AMOUNT, MAX_DESCRIPTIONS_AMOUNT)],
   likes: getRandomInteger(MIN_LIKES_AMOUNT, MAX_LIKES_AMOUNT),
-  comments: Array.from({length: getRandomInteger(MIN_COMMENTS_LENGTH, MAX_COMMENTS_LENGTH)}, createComment),
+  comments: Array.from({length: getRandomInteger(MIN_COMMENTS_LENGTH, MAX_COMMENTS_LENGTH)}, createComments),
 });
 
 const createFotoDescriptions = () => Array.from({length: SIMILAR_DESCRIPTIONS_COUNT}, createFotoDescription);
