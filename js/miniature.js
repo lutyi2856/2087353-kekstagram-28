@@ -1,4 +1,5 @@
-const similarListElement = document.querySelector('.pictures');
+const commentsPopup = document.querySelector('.social__comments');
+const commentElementPopup = document.querySelector('.social__comment');
 const similarFotoTemplate = document.querySelector('#picture')
   .content
   .querySelector('.picture');
@@ -19,4 +20,19 @@ const renderThumbnails = (descriptions, container) => {
   container.appendChild(fragment);
 };
 
-export {renderThumbnails};
+const renderComments = (comments) => {
+  const fragmentComments = document.createDocumentFragment();
+  comments.forEach((comments) => {
+    const commentsElement = commentElementPopup.cloneNode(true);
+    commentsElement.querySelector('.social__picture').src = comments.avatar;
+    commentsElement.querySelector('.social__picture').alt = comments.name;
+    commentsElement.querySelector('.social__text').textContent = comments.message;
+    commentsElement.dataset.commentId = comments.id;
+    fragmentComments.appendChild(commentsElement);
+  });
+
+  commentsPopup.appendChild(fragmentComments);
+};
+
+
+export {renderThumbnails, renderComments};
