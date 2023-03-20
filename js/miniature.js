@@ -22,6 +22,7 @@ const renderThumbnails = (descriptions, container) => {
 
 const renderComments = (comments) => {
   const fragmentComments = document.createDocumentFragment();
+  commentsPopup.innerHTML = '';
   comments.forEach((comments) => {
     const commentsElement = commentElementPopup.cloneNode(true);
     commentsElement.querySelector('.social__picture').src = comments.avatar;

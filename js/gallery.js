@@ -1,6 +1,7 @@
 import {renderThumbnails} from './miniature.js';
 import {showPicturePopup} from './popup.js';
 
+
 const container = document.querySelector('.pictures');
 
 const renderGallery = (pictures) => {

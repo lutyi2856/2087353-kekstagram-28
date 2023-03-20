@@ -28,10 +28,12 @@ const showPicturePopup = (picture) => {
   picturePopup.querySelector('.social__comment-count').classList.add('hidden');
   picturePopup.querySelector('.comments-loader').classList.add('hidden');
   picturePopup.classList.remove('hidden');
+  renderComments(picture.comments);
+
   bodyPage.classList.add('modal-open');
   closePopupButton.addEventListener('click', onPopupClose);
   document.addEventListener('keydown', onEscapeClose);
-  renderComments(picture.comments);
+
 };
 
 export {showPicturePopup};
