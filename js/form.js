@@ -72,9 +72,11 @@ pristine.addValidator (
 
 const onFormSubmit = (evt) => {
   evt.preventDefault();
-  pristine.validate(validateTags);
-  if(validateTags) {
+  pristine.validate();
+  if(validateTags(hashtagField.value)) {
     FormAddImage.submit();
+  } else {
+    evt.preventDefault();
   }
 };
 
