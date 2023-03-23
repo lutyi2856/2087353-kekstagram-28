@@ -8,12 +8,6 @@ const closePopupButton = picturePopup.querySelector('.big-picture__cancel');
 const commentsLoadButton = picturePopup.querySelector('.social__comments-loader');
 const currenCountLabel = picturePopup.querySelector('.social__comment-count');
 
-// 1.Показать не больше или равно 5 ком
-
-// - завести переменную  и проверять длину массива и если длина > 5 , обрезать до 5 элементов;
-// 2.Счётчик  создать который будет показывать текущее количество комментариев
-// 3. Функция обработчик событий на кнопку загрузить еще, в которая увеличивает счетчик на пять и согласно счётчика обрезаться
-
 
 const renderComments = (comments) => {
   const fragmentComments = document.createDocumentFragment();
