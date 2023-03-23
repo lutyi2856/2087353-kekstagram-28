@@ -10,16 +10,10 @@ const inputTextHashtags = formPopup.querySelector('.text__hashtags');
 const inputTextDescription = formPopup.querySelector('.text__description');
 const hashtagField = document.querySelector('.text__hashtags');
 
-const pristine = new Pristine (FormAddImage, {
+const pristine = new Pristine(FormAddImage, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__field-wrapper__eror'
-});
-
-
-FormAddImage.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  pristine.validate();
 });
 
 
