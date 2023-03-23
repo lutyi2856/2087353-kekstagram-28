@@ -70,8 +70,12 @@ pristine.addValidator (
   TASK_ERROR_TEXT
 );
 
-const onFormSubmit = () => {
-  pristine.validate();
+const onFormSubmit = (evt) => {
+  evt.preventDefault();
+  pristine.validate(validateTags);
+  if(validateTags) {
+    FormAddImage.submit();
+  }
 };
 
 FormAddImage.addEventListener('submit', onFormSubmit);
