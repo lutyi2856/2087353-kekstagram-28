@@ -59,7 +59,7 @@ const hasUniqueTags = (tags) => {
 const validateTags = (value) => {
   const tags = value
     .trim()
-    .splint(' ')
+    .split(' ')
     .filter((tag) => tag.trim().length);
   return hasValidCount(tags) && hasUniqueTags(tags) && tags.every(isValidTag);
 };
@@ -70,8 +70,7 @@ pristine.addValidator (
   TASK_ERROR_TEXT
 );
 
-const onFormSubmit = (evt) => {
-  evt.preventDefault();
+const onFormSubmit = () => {
   pristine.validate();
 };
 
