@@ -32,6 +32,9 @@ const onEscapeClose = (evt) => {
   }
   document.removeEventListener('keydown', onEscapeClose);
   closePopupButton.removeEventListener('click', onPopupClose);
+  if(document.querySelector('.social__comments-loader').classList.contains('hidden')) {
+    commentsLoadButton.classList.remove('hidden');
+  }
 };
 
 export {

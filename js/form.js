@@ -1,3 +1,6 @@
+import {resetScale} from './scale.js';
+// import {resetEffects} from './effect.js';
+
 const MAX_HASHTAG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-za-яё0-9]{1,19}$/i;
 const TASK_ERROR_TEXT = 'Не правильно заполнены хэштэги';
@@ -45,6 +48,7 @@ const onPopupFormClose = () => {
 const onInputUpload = () => {
   formPopup.classList.remove('hidden');
   document.body.classList.add('modal-open');
+  resetScale();
 };
 
 const isValidTag = (tag) => VALID_SYMBOLS.test(tag);
