@@ -29,7 +29,7 @@ const onPopupClose = () => {
   document.body.classList.remove('modal-open');
   closePopupButton.removeEventListener('click', onPopupClose);
   document.removeEventListener('keydown', onEscapeClose);
-  if(document.querySelector('.social__comments-loader').classList.contains('hidden')) {
+  if(commentsLoadButton.classList.contains('hidden')) {
     commentsLoadButton.classList.remove('hidden');
   }
 
@@ -44,13 +44,6 @@ const createCommentsCounter = () => {
   };
 };
 
-const isFirstCommentCount = (picture) => {
-  let currentCountLength = COMMENTS_COUNT_LOAD;
-  if(picture.comments.length <= COMMENTS_COUNT_LOAD) {
-    currentCountLength = picture.comments.length;
-  }
-  return currentCountLength;
-};
 
 const showPicturePopup = (picture) => {
   const commentsCounter = createCommentsCounter();
@@ -59,28 +52,26 @@ const showPicturePopup = (picture) => {
   picturePopup.querySelector('.likes-count').textContent = picture.likes;
   picturePopup.querySelector('.comments-count').textContent = picture.comments.length;
   picturePopup.querySelector('.social__caption').textContent = picture.description;
-  const firstCommentCount = isFirstCommentCount(picture);
-  currenCountLabel.firstChild.textContent = `${firstCommentCount} из `;
   picturePopup.classList.remove('hidden');
   renderComments(picture.comments.slice(0, COMMENTS_COUNT_LOAD));
+  const currentCommentsLength = document.querySelectorAll('.social__comment').length;
+  currenCountLabel.firstChild.textContent = `${currentCommentsLength} из `;
   document.body.classList.add('modal-open');
   closePopupButton.addEventListener('click', onPopupClose);
   document.addEventListener('keydown', onEscapeClose);
-  console.log(`${picture.comments.length}  длина массива - 1`);
   if(picture.comments.length <= COMMENTS_COUNT_LOAD) {
     commentsLoadButton.classList.add('hidden');
   }
   commentsLoadButton.addEventListener('click', () => {
     const commentsCount = commentsCounter();
     const currentComments = picture.comments.slice(0, commentsCount);
-    console.log(`${currentComments.length} счётчик - 2`);
-    console.log(`${picture.comments.length}  длина массива - 2`);
+    const commentsLength = picture.comments.length;
+    console.log(commentsLength);
     currenCountLabel.firstChild.textContent = `${currentComments.length} из `;
     renderComments(currentComments);
-    if(currentComments.length >= picture.comments.length) {
+    console.log(commentsCount);
+    if(commentsCount >= commentsLength) {
       commentsLoadButton.classList.add('hidden');
-      console.log(`${currentComments.length} счётчик - 3`);
-      console.log(`${picture.comments.length}  длина массива - 3`);
     }
   });
 };
