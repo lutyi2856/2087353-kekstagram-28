@@ -1,3 +1,5 @@
+import {onPopupClose, picturePopup, closePopupButton} from './popup.js';
+
 const getRandomInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
@@ -22,8 +24,18 @@ function createRandomIdFromRangeGenerator (min, max) {
   };
 }
 
+const onEscapeClose = (evt) => {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
+    picturePopup.classList.add('hidden');
+    document.body.classList.remove('modal-open');
+  }
+  document.removeEventListener('keydown', onEscapeClose);
+  closePopupButton.removeEventListener('click', onPopupClose);
+};
 
 export {
   createRandomIdFromRangeGenerator,
   getRandomInteger,
+  onEscapeClose
 };
