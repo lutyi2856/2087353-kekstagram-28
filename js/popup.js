@@ -1,4 +1,4 @@
-import {onEscapeClose} from './util.js';
+import {isEscapeKey} from './util.js';
 
 const COMMENTS_COUNT_LOAD = 5;
 const commentsPopup = document.querySelector('.social__comments');
@@ -24,17 +24,26 @@ const renderComments = (comments) => {
   commentsPopup.appendChild(fragmentComments);
 };
 
+let onCommentsLoadClick;
+
 const onPopupClose = () => {
   picturePopup.classList.add('hidden');
   document.body.classList.remove('modal-open');
   closePopupButton.removeEventListener('click', onPopupClose);
   document.removeEventListener('keydown', onEscapeClose);
-  if(commentsLoadButton.classList.contains('hidden')) {
-    commentsLoadButton.classList.remove('hidden');
-  }
-
+  commentsLoadButton.removeEventListener('click', onCommentsLoadClick);
 };
 
+function onEscapeClose(evt){
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    picturePopup.classList.add('hidden');
+    document.body.classList.remove('modal-open');
+  }
+  document.removeEventListener('keydown', onEscapeClose);
+  closePopupButton.removeEventListener('click', onPopupClose);
+  commentsLoadButton.removeEventListener('click', onCommentsLoadClick);
+}
 
 const createCommentsCounter = () => {
   let counter = COMMENTS_COUNT_LOAD;
@@ -59,21 +68,18 @@ const showPicturePopup = (picture) => {
   document.body.classList.add('modal-open');
   closePopupButton.addEventListener('click', onPopupClose);
   document.addEventListener('keydown', onEscapeClose);
-  if(picture.comments.length <= COMMENTS_COUNT_LOAD) {
-    commentsLoadButton.classList.add('hidden');
-  }
-  commentsLoadButton.addEventListener('click', () => {
+  onCommentsLoadClick = () => {
     const commentsCount = commentsCounter();
     const currentComments = picture.comments.slice(0, commentsCount);
     const commentsLength = picture.comments.length;
-    console.log(commentsLength);
     currenCountLabel.firstChild.textContent = `${currentComments.length} из `;
     renderComments(currentComments);
-    console.log(commentsCount);
     if(commentsCount >= commentsLength) {
       commentsLoadButton.classList.add('hidden');
     }
-  });
+  };
+  commentsLoadButton.classList.toggle('hidden', picture.comments.length <= COMMENTS_COUNT_LOAD);
+  commentsLoadButton.addEventListener('click', onCommentsLoadClick);
 };
 
-export {showPicturePopup, onPopupClose, picturePopup, closePopupButton};
+export {showPicturePopup, picturePopup, closePopupButton};

@@ -1,4 +1,4 @@
-import {onPopupClose, picturePopup, closePopupButton} from './popup.js';
+
 
 const getRandomInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -6,6 +6,8 @@ const getRandomInteger = (a, b) => {
   const result = Math.random() * (upper - lower + 1) + lower;
   return Math.floor(result);
 };
+
+const isEscapeKey = (evt) => evt.key === 'Escape';
 
 function createRandomIdFromRangeGenerator (min, max) {
   const previousValues = [];
@@ -24,21 +26,9 @@ function createRandomIdFromRangeGenerator (min, max) {
   };
 }
 
-const onEscapeClose = (evt) => {
-  if (evt.key === 'Escape') {
-    evt.preventDefault();
-    picturePopup.classList.add('hidden');
-    document.body.classList.remove('modal-open');
-  }
-  document.removeEventListener('keydown', onEscapeClose);
-  closePopupButton.removeEventListener('click', onPopupClose);
-  if(document.querySelector('.social__comments-loader').classList.contains('hidden')) {
-    commentsLoadButton.classList.remove('hidden');
-  }
-};
 
 export {
   createRandomIdFromRangeGenerator,
   getRandomInteger,
-  onEscapeClose
+  isEscapeKey,
 };
