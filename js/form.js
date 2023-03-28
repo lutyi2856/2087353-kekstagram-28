@@ -1,4 +1,3 @@
-
 import {resetScale} from './scale.js';
 import {resetEffects} from './effect.js';
 
@@ -49,8 +48,6 @@ const onPopupFormClose = () => {
 const onInputUpload = () => {
   formPopup.classList.remove('hidden');
   document.body.classList.add('modal-open');
-  resetScale();
-  resetEffects();
   pristine.reset();
 };
 
