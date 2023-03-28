@@ -1,12 +1,12 @@
+import {isEscapeKey} from './util.js';
 
-import {onEscapeClose} from './util.js';
 const COMMENTS_COUNT_LOAD = 5;
 const commentsPopup = document.querySelector('.social__comments');
 const commentElementPopup = document.querySelector('.social__comment');
 const picturePopup = document.querySelector('.big-picture');
-const closePopupButton = picturePopup.querySelector('.big-picture__cancel');
-const commentsLoadButton = picturePopup.querySelector('.social__comments-loader');
-const currenCountLabel = picturePopup.querySelector('.social__comment-count');
+const closePopupButton = document.querySelector('.big-picture__cancel');
+const commentsLoadButton = document.querySelector('.social__comments-loader');
+const currenCountLabel = document.querySelector('.social__comment-count');
 
 
 const renderComments = (comments) => {
@@ -24,12 +24,26 @@ const renderComments = (comments) => {
   commentsPopup.appendChild(fragmentComments);
 };
 
+let onCommentsLoadClick;
+
 const onPopupClose = () => {
   picturePopup.classList.add('hidden');
   document.body.classList.remove('modal-open');
   closePopupButton.removeEventListener('click', onPopupClose);
   document.removeEventListener('keydown', onEscapeClose);
+  commentsLoadButton.removeEventListener('click', onCommentsLoadClick);
 };
+
+function onEscapeClose(evt){
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    picturePopup.classList.add('hidden');
+    document.body.classList.remove('modal-open');
+  }
+  document.removeEventListener('keydown', onEscapeClose);
+  closePopupButton.removeEventListener('click', onPopupClose);
+  commentsLoadButton.removeEventListener('click', onCommentsLoadClick);
+}
 
 const createCommentsCounter = () => {
   let counter = COMMENTS_COUNT_LOAD;
@@ -38,6 +52,7 @@ const createCommentsCounter = () => {
     return counter;
   };
 };
+
 
 const showPicturePopup = (picture) => {
   const commentsCounter = createCommentsCounter();
@@ -48,18 +63,23 @@ const showPicturePopup = (picture) => {
   picturePopup.querySelector('.social__caption').textContent = picture.description;
   picturePopup.classList.remove('hidden');
   renderComments(picture.comments.slice(0, COMMENTS_COUNT_LOAD));
+  const currentCommentsLength = document.querySelectorAll('.social__comment').length;
+  currenCountLabel.firstChild.textContent = `${currentCommentsLength} из `;
   document.body.classList.add('modal-open');
   closePopupButton.addEventListener('click', onPopupClose);
   document.addEventListener('keydown', onEscapeClose);
-  commentsLoadButton.addEventListener('click', () => {
+  onCommentsLoadClick = () => {
     const commentsCount = commentsCounter();
     const currentComments = picture.comments.slice(0, commentsCount);
-    currenCountLabel.firstChild.data = `${currentComments.length} из `;
+    const commentsLength = picture.comments.length;
+    currenCountLabel.firstChild.textContent = `${currentComments.length} из `;
     renderComments(currentComments);
-    if(commentsCount >= picture.comments.length) {
+    if(commentsCount >= commentsLength) {
       commentsLoadButton.classList.add('hidden');
     }
-  });
+  };
+  commentsLoadButton.classList.toggle('hidden', picture.comments.length <= COMMENTS_COUNT_LOAD);
+  commentsLoadButton.addEventListener('click', onCommentsLoadClick);
 };
 
-export {showPicturePopup, onPopupClose, picturePopup, closePopupButton};
+export {showPicturePopup, picturePopup, closePopupButton};
