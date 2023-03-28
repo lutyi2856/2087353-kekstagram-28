@@ -49,6 +49,8 @@ const onInputUpload = () => {
   formPopup.classList.remove('hidden');
   document.body.classList.add('modal-open');
   pristine.reset();
+  resetScale();
+  resetEffects();
 };
 
 const isValidTag = (tag) => VALID_SYMBOLS.test(tag);
