@@ -1,6 +1,4 @@
 
-import {resetScale} from './scale.js';
-import {resetEffects} from './effect.js';
 
 const MAX_HASHTAG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-za-яё0-9]{1,19}$/i;
@@ -49,8 +47,6 @@ const onPopupFormClose = () => {
 const onInputUpload = () => {
   formPopup.classList.remove('hidden');
   document.body.classList.add('modal-open');
-  resetScale();
-  resetEffects();
   pristine.reset();
 };
 
