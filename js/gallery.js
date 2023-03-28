@@ -13,6 +13,7 @@ const renderGallery = (pictures) => {
     const picture = pictures.find(
       (item) => item.id === +fotoElement.dataset.thumbnailId
     );
+
     showPicturePopup(picture);
 
   });
