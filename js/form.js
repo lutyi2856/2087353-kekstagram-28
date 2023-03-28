@@ -1,3 +1,4 @@
+
 import {resetScale} from './scale.js';
 import {resetEffects} from './effect.js';
 
