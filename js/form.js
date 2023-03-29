@@ -1,40 +1,23 @@
-import {resetScale} from './scale.js';
-import {resetEffects} from './effect.js';
+import {isEscapeKey} from './util.js';
 
 const MAX_HASHTAG_COUNT = 5;
+const MAX_LENGTH_DESCRIPTION = 140;
 const VALID_SYMBOLS = /^#[a-za-яё0-9]{1,19}$/i;
-const TASK_ERROR_TEXT = 'Не правильно заполнены хэштэги';
-
+const HASHTAGS_ERROR_TEXT = 'Не правильно заполнены хэштэги';
+const ERROR_TEXT_DESCRIPTION = 'Максимальная длина 140 символов';
 const formPopup = document.querySelector('.img-upload__overlay');
 const uploadImgButton = document.querySelector('#upload-file');
 const formPopupClose = document.querySelector('#upload-cancel');
-const FormAddImage = document.querySelector('#upload-select-image');
+const formAddImage = document.querySelector('#upload-select-image');
 const inputTextHashtags = formPopup.querySelector('.text__hashtags');
 const inputTextDescription = formPopup.querySelector('.text__description');
 const hashtagField = document.querySelector('.text__hashtags');
 
-const pristine = new Pristine(FormAddImage, {
+const pristine = new Pristine(formAddImage, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__field-wrapper__eror'
 });
-
-
-const onEscapeFormClose = (evt) => {
-  if (evt.key === 'Escape') {
-    if(inputTextHashtags === document.activeElement || inputTextDescription === document.activeElement) {
-      evt.stopPropagation();
-    } else {
-      evt.preventDefault();
-      formPopup.classList.add('hidden');
-      document.body.classList.remove('modal-open');
-      uploadImgButton.value = '';
-      FormAddImage.reset();
-      document.removeEventListener('keydown', onEscapeFormClose);
-      formPopupClose.removeEventListener('click', onPopupFormClose);
-    }
-  }
-};
 
 const onPopupFormClose = () => {
   formPopup.classList.add('hidden');
@@ -45,12 +28,33 @@ const onPopupFormClose = () => {
   document.addEventListener('keydown', onEscapeFormClose);
 };
 
+
+function onEscapeFormClose(evt) {
+  if (isEscapeKey(evt)) {
+    if(inputTextHashtags === document.activeElement || inputTextDescription === document.activeElement) {
+      evt.stopPropagation();
+    } else {
+      evt.preventDefault();
+      formPopup.classList.add('hidden');
+      document.body.classList.remove('modal-open');
+      uploadImgButton.value = '';
+      formAddImage.reset();
+      document.removeEventListener('keydown', onEscapeFormClose);
+      formPopupClose.removeEventListener('click', onPopupFormClose);
+    }
+  }
+}
+
+
 const onInputUpload = () => {
   formPopup.classList.remove('hidden');
   document.body.classList.add('modal-open');
   pristine.reset();
+<<<<<<< HEAD
   resetScale();
   resetEffects();
+=======
+>>>>>>> 37bc8ae1668f3776b2a2cfdc41065b27653b0b22
 };
 
 const isValidTag = (tag) => VALID_SYMBOLS.test(tag);
@@ -73,20 +77,30 @@ const validateTags = (value) => {
 pristine.addValidator (
   hashtagField,
   validateTags,
-  TASK_ERROR_TEXT
+  HASHTAGS_ERROR_TEXT
+);
+
+const validateTextDescription = (value) => {
+  if(value.length < MAX_LENGTH_DESCRIPTION) {
+    return true;
+  }
+};
+
+pristine.addValidator (
+  inputTextDescription,
+  validateTextDescription,
+  ERROR_TEXT_DESCRIPTION
 );
 
 const onFormSubmit = (evt) => {
-  evt.preventDefault();
-  pristine.validate();
-  if(validateTags(hashtagField.value)) {
-    FormAddImage.submit();
+  if(pristine.validate()) {
+    formAddImage.submit();
   } else {
     evt.preventDefault();
   }
 };
 
-FormAddImage.addEventListener('submit', onFormSubmit);
+formAddImage.addEventListener('submit', onFormSubmit);
 uploadImgButton.addEventListener('change', onInputUpload);
 formPopupClose.addEventListener('click', onPopupFormClose);
 document.addEventListener('keydown', onEscapeFormClose);
