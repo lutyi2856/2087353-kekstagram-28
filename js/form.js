@@ -1,3 +1,5 @@
+import {resetEffects} from './effects.js';
+import {resetScale} from './scale.js';
 import {isEscapeKey} from './util.js';
 
 const MAX_HASHTAG_COUNT = 5;
@@ -50,6 +52,8 @@ const onInputUpload = () => {
   formPopup.classList.remove('hidden');
   document.body.classList.add('modal-open');
   pristine.reset();
+  resetScale();
+  resetEffects();
 };
 
 const isValidTag = (tag) => VALID_SYMBOLS.test(tag);
@@ -75,11 +79,7 @@ pristine.addValidator (
   HASHTAGS_ERROR_TEXT
 );
 
-const validateTextDescription = (value) => {
-  if(value.length < MAX_LENGTH_DESCRIPTION) {
-    return true;
-  }
-};
+const validateTextDescription = (value) => value.length <= MAX_LENGTH_DESCRIPTION;
 
 pristine.addValidator (
   inputTextDescription,
@@ -88,9 +88,7 @@ pristine.addValidator (
 );
 
 const onFormSubmit = (evt) => {
-  if(pristine.validate()) {
-    formAddImage.submit();
-  } else {
+  if (!pristine.validate()) {
     evt.preventDefault();
   }
 };
