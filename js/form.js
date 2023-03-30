@@ -41,6 +41,8 @@ const hide = () => {
   document.body.classList.remove('modal-open');
   uploadImgButton.value = '';
   formAddImage.reset();
+  pristine.reset();
+  resetEffects();
   document.removeEventListener('keydown', onEscapeFormClose);
   formPopupClose.removeEventListener('click', onPopupFormClose);
 };
@@ -65,9 +67,9 @@ function onEscapeFormClose(evt) {
 const onInputUpload = () => {
   formPopup.classList.remove('hidden');
   document.body.classList.add('modal-open');
-  pristine.reset();
   resetScale();
-  resetEffects();
+  formPopupClose.addEventListener('click', onPopupFormClose);
+  document.addEventListener('keydown', onEscapeFormClose);
 };
 
 const isValidTag = (tag) => VALID_SYMBOLS.test(tag);
@@ -115,6 +117,5 @@ const onFormSubmit = (cb) => {
 
 
 uploadImgButton.addEventListener('change', onInputUpload);
-formPopupClose.addEventListener('click', onPopupFormClose);
-document.addEventListener('keydown', onEscapeFormClose);
+
 export {onFormSubmit, onPopupFormClose};
