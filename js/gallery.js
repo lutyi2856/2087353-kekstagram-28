@@ -1,4 +1,5 @@
-import {renderThumbnails} from './miniature.js';
+
+import { renderThumbnails } from './miniature.js';
 import {showPicturePopup} from './popup.js';
 
 

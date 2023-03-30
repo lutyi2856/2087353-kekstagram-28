@@ -3,7 +3,7 @@ const similarFotoTemplate = document.querySelector('#picture')
   .querySelector('.picture');
 
 
-const renderThumbnails = (descriptions, container) => {
+const renderThumbnails = (descriptions) => {
   const fragment = document.createDocumentFragment();
   descriptions.forEach((foto) => {
     const fotoElement = similarFotoTemplate.cloneNode(true);
@@ -15,7 +15,7 @@ const renderThumbnails = (descriptions, container) => {
     fragment.appendChild(fotoElement);
   });
 
-  container.appendChild(fragment);
+  document.querySelector('.pictures').appendChild(fragment);
 };
 
 

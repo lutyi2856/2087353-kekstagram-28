@@ -14,6 +14,21 @@ const formAddImage = document.querySelector('#upload-select-image');
 const inputTextHashtags = formPopup.querySelector('.text__hashtags');
 const inputTextDescription = formPopup.querySelector('.text__description');
 const hashtagField = document.querySelector('.text__hashtags');
+const submitButton = document.querySelector('.img-upload__submit');
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Публикуется...'
+};
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
 
 const pristine = new Pristine(formAddImage, {
   classTo: 'img-upload__field-wrapper',
@@ -21,14 +36,18 @@ const pristine = new Pristine(formAddImage, {
   errorTextClass: 'img-upload__field-wrapper__eror'
 });
 
-const onPopupFormClose = () => {
+const hide = () => {
   formPopup.classList.add('hidden');
   document.body.classList.remove('modal-open');
   uploadImgButton.value = '';
-  formPopup.reset();
-  formPopupClose.addEventListener('click', onPopupFormClose);
-  document.addEventListener('keydown', onEscapeFormClose);
+  formAddImage.reset();
+  document.removeEventListener('keydown', onEscapeFormClose);
+  formPopupClose.removeEventListener('click', onPopupFormClose);
 };
+
+function onPopupFormClose() {
+  hide();
+}
 
 
 function onEscapeFormClose(evt) {
@@ -37,12 +56,7 @@ function onEscapeFormClose(evt) {
       evt.stopPropagation();
     } else {
       evt.preventDefault();
-      formPopup.classList.add('hidden');
-      document.body.classList.remove('modal-open');
-      uploadImgButton.value = '';
-      formAddImage.reset();
-      document.removeEventListener('keydown', onEscapeFormClose);
-      formPopupClose.removeEventListener('click', onPopupFormClose);
+      hide();
     }
   }
 }
@@ -87,13 +101,20 @@ pristine.addValidator (
   ERROR_TEXT_DESCRIPTION
 );
 
-const onFormSubmit = (evt) => {
-  if (!pristine.validate()) {
+const onFormSubmit = (cb) => {
+  formAddImage.addEventListener('submit', async (evt) => {
     evt.preventDefault();
-  }
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      await cb(new FormData(formAddImage));
+      unblockSubmitButton();
+    }
+  });
 };
 
-formAddImage.addEventListener('submit', onFormSubmit);
+
 uploadImgButton.addEventListener('change', onInputUpload);
 formPopupClose.addEventListener('click', onPopupFormClose);
 document.addEventListener('keydown', onEscapeFormClose);
+export {onFormSubmit, onPopupFormClose};
