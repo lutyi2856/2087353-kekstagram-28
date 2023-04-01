@@ -1,7 +1,8 @@
 
 import { renderThumbnails } from './miniature.js';
 import {showPicturePopup} from './popup.js';
-
+import { showAlert } from './util.js';
+import {getData} from './api.js';
 
 const container = document.querySelector('.pictures');
 
@@ -18,7 +19,16 @@ const renderGallery = (pictures) => {
     showPicturePopup(picture);
 
   });
-  renderThumbnails(pictures, container);
+  renderThumbnails(pictures);
 };
 
-export {renderGallery};
+const getDataPicture = async () => {
+  try {
+    const data = await getData();
+    renderGallery(data);
+  } catch(err) {
+    showAlert(err.message);
+  }
+};
+
+export {renderGallery, getDataPicture};
