@@ -21,7 +21,7 @@ const inputTextHashtags = formPopup.querySelector('.text__hashtags');
 const inputTextDescription = formPopup.querySelector('.text__description');
 const hashtagField = document.querySelector('.text__hashtags');
 const submitButton = document.querySelector('.img-upload__submit');
-
+const filtersContainer = document.querySelector('.img-filters');
 
 const blockSubmitButton = () => {
   submitButton.disabled = true;
@@ -124,6 +124,7 @@ const addFormSubmitListener = async() => {
       blockSubmitButton();
       await answerOfFormSubmit();
       unblockSubmitButton();
+      filtersContainer.classList.remove('img-filters--inactive');
     }
   });
 
