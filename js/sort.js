@@ -40,7 +40,6 @@ const setOnSorterClick = (callback) => {
       .classList.remove('img-filters__button--active');
     clickedButton.classList.add('img-filters__button--active');
     currentFilter = clickedButton.id;
-    console.log(currentFilter);
     callback(getFilterdPictures);
   });
 };
