@@ -3,7 +3,7 @@ import {resetScale} from './scale.js';
 import {isEscapeKey} from './util.js';
 import {sendData} from './api.js';
 import { showSuccessMessage, showErrorMessage } from './message.js';
-import { onLoadInputPreview } from './preview.js';
+import { loadPreview } from './preview.js';
 
 const SubmitButtonText = {
   IDLE: 'Опубликовать',
@@ -72,6 +72,7 @@ const onInputUpload = () => {
   formPopup.classList.remove('hidden');
   document.body.classList.add('modal-open');
   resetScale();
+  loadPreview();
   formPopupClose.addEventListener('click', onPopupFormClose);
   document.addEventListener('keydown', onEscapeFormClose);
 };
@@ -132,7 +133,7 @@ const addFormSubmitListener = async() => {
 
 addFormSubmitListener();
 uploadImgButton.addEventListener('change', onInputUpload);
-onLoadInputPreview();
+
 
 export {addFormSubmitListener, onPopupFormClose};
 

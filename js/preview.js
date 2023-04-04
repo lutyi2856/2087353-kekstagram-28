@@ -3,7 +3,7 @@ const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const fileChooser = document.querySelector('#upload-file');
 const preview = document.querySelector('.img-upload__preview img');
 
-const onPreviewLoad = () => {
+const loadPreview = () => {
   const file = fileChooser.files[0];
   const fileName = file.name.toLowerCase();
 
@@ -14,8 +14,5 @@ const onPreviewLoad = () => {
   }
 };
 
-const onLoadInputPreview = () => {
-  fileChooser.addEventListener('change', onPreviewLoad);
-};
 
-export {onLoadInputPreview};
+export {loadPreview};
