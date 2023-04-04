@@ -19,8 +19,6 @@ const onContainerClick = (evt) => {
   );
 
   showPicturePopup(picture);
-
-
 };
 
 const renderGallery = (currentPictures) => {
