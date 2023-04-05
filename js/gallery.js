@@ -4,7 +4,7 @@ import {showPicturePopup} from './popup.js';
 import { showAlert } from './util.js';
 import {getData} from './api.js';
 import { debounce } from './util.js';
-import { init, getFilterdPictures } from './sort.js';
+import { init, getFilteredPictures } from './sort.js';
 
 const container = document.querySelector('.pictures');
 let pictures = [];
@@ -32,7 +32,7 @@ const getDataPicture = async () => {
     const data = await getData();
     const debouncedRenderGallery = debounce(renderGallery);
     init(data, debouncedRenderGallery);
-    renderGallery(getFilterdPictures());
+    renderGallery(getFilteredPictures());
   } catch(err) {
     showAlert(err.message);
   }
