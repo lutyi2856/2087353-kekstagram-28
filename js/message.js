@@ -52,6 +52,7 @@ const showErrorMessage = () => {
       errorMessagePopup.remove();
     }
   });
+
   onCloseEscapeErrorMessage = (evt) => {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
@@ -59,11 +60,13 @@ const showErrorMessage = () => {
       document.removeEventListener('keydown',onCloseEscapeErrorMessage);
     }
   };
+
+  document.addEventListener('keydown',onCloseEscapeErrorMessage);
   buttonErrorMessage.addEventListener('click', () => {
     errorMessageElement.remove();
     document.removeEventListener('keydown',onCloseEscapeErrorMessage);
   });
-  document.addEventListener('keydown',onCloseEscapeErrorMessage);
+
 };
 
 

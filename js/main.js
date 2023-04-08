@@ -1,7 +1,7 @@
 
 import {getDataPicture} from './gallery.js';
-import './form.js';
+import {addFormSubmitListener} from './form.js';
 
 getDataPicture();
-
+addFormSubmitListener();
 

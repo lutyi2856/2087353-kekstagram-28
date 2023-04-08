@@ -3,6 +3,7 @@ import {resetScale} from './scale.js';
 import {isEscapeKey} from './util.js';
 import {sendData} from './api.js';
 import { showSuccessMessage, showErrorMessage } from './message.js';
+import { showAlert } from './util.js';
 import { loadPreview } from './preview.js';
 
 const SubmitButtonText = {
@@ -114,8 +115,9 @@ const answerOfFormSubmit = async () => {
     await sendData(new FormData(formAddImage));
     onPopupFormClose();
     showSuccessMessage();
-  }catch {
+  }catch(err) {
     showErrorMessage();
+    showAlert(err.message);
   }
 };
 
@@ -132,7 +134,7 @@ const addFormSubmitListener = async() => {
 
 };
 
-addFormSubmitListener();
+
 uploadImgButton.addEventListener('change', onInputUpload);
 
 
