@@ -57,8 +57,9 @@ function onPopupFormClose() {
 
 
 function onEscapeFormClose(evt) {
+  const errorMessage = document.querySelector('.error');
   if (isEscapeKey(evt)) {
-    if(inputTextHashtags === document.activeElement || inputTextDescription === document.activeElement) {
+    if(inputTextHashtags === document.activeElement || inputTextDescription === document.activeElement || errorMessage) {
       evt.stopPropagation();
     } else {
       evt.preventDefault();
