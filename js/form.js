@@ -10,6 +10,7 @@ const SubmitButtonText = {
   IDLE: 'Опубликовать',
   SENDING: 'Публикуется...'
 };
+
 const MAX_HASHTAG_COUNT = 5;
 const MAX_LENGTH_DESCRIPTION = 140;
 const VALID_SYMBOLS = /^#[a-za-яё0-9]{1,19}$/i;
@@ -110,7 +111,7 @@ pristine.addValidator (
   ERROR_TEXT_DESCRIPTION
 );
 
-const answerOfFormSubmit = async () => {
+const getAnswerOfForm = async () => {
   try {
     await sendData(new FormData(formAddImage));
     onPopupFormClose();
@@ -127,7 +128,7 @@ const addFormSubmitListener = async() => {
     const isValid = pristine.validate();
     if (isValid) {
       blockSubmitButton();
-      await answerOfFormSubmit();
+      await getAnswerOfForm();
       unblockSubmitButton();
     }
   });
